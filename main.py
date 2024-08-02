@@ -1,5 +1,3 @@
-# API CODE (first 2 functions work, identify outliers doesnt work)
-
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from typing import List
 import pandas as pd
@@ -43,24 +41,7 @@ def abc_analysis(segmentation_period_df: pd.DataFrame, a_threshold: int, b_thres
     summarised_df['ABC'] = pd.cut(summarised_df['% Rev'], bins=abc_bins, labels=abc_labels, right=True, include_lowest=True)
     return summarised_df
 
-# def identify_outliers(segmentation_period_df: pd.DataFrame, summarised_df: pd.DataFrame):
-#     # Calculate the sales standard deviation and mean
-#     sales_data_columns = segmentation_period_df.columns[2:-1]
-#     segmentation_period_df['Sales Std Dev'] = segmentation_period_df[sales_data_columns].std(axis=1)
-#     segmentation_period_df['Sales Mean'] = segmentation_period_df[sales_data_columns].mean(axis=1)
-    
-#     # Merge these values into summarised_df
-#     summarised_df['Sales Std Dev'] = segmentation_period_df['Sales Std Dev']
-#     summarised_df['Sales Mean'] = segmentation_period_df['Sales Mean']
-
-#     # Calculate the coefficient of variation
-#     summarised_df['coefficient_variation_%'] = (summarised_df['Sales Std Dev'] / summarised_df['Sales Mean']) * 100
-
-#     # Handle NaN values: replace with a large number or some other logic
-#     summarised_df['coefficient_variation_%'].fillna(1000000, inplace=True)
-    
-
-def identify_outliers(segmentation_period_df, summarised_df):  #works
+def identify_outliers(segmentation_period_df, summarised_df):  
     # Calculate the sales standard deviation and mean
     sales_data_columns = segmentation_period_df.columns[2:-1]
     segmentation_period_df['Sales Std Dev'] = segmentation_period_df[sales_data_columns].std(axis=1)
